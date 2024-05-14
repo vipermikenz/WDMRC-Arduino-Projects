@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Servo Control</title>
+    <style>
+        .servo-control {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Servo Control Interface</h1>
+    
+    <div id="servo1" class="servo-control">
+        <h2>Servo 1</h2>
+        <p>Straight Position: <span id="servo1-straight">70</span>°</p>
+        <p>Switched Position: <span id="servo1-switched">120</span>°</p>
+        <button onclick="adjustServo(0, 0, 1)">Straight +1°</button>
+        <button onclick="adjustServo(0, 0, -1)">Straight -1°</button>
+        <button onclick="adjustServo(0, 1, 1)">Switched +1°</button>
+        <button onclick="adjustServo(0, 1, -1)">Switched -1°</button>
+    </div>
+    <hr>
+    <div id="servo2" class="servo-control">
+        <h2>Servo 2</h2>
+        <p>Straight Position: <span id="servo1-straight">70</span>°</p>
+        <p>Switched Position: <span id="servo1-switched">120</span>°</p>
+        <button onclick="adjustServo(0, 0, 1)">Straight +1°</button>
+        <button onclick="adjustServo(0, 0, -1)">Straight -1°</button>
+        <button onclick="adjustServo(0, 1, 1)">Switched +1°</button>
+        <button onclick="adjustServo(0, 1, -1)">Switched -1°</button>
+    </div>
+    <hr>
+    <div id="servo3" class="servo-control">
+        <h2>Servo 3</h2>
+        <p>Straight Position: <span id="servo1-straight">70</span>°</p>
+        <p>Switched Position: <span id="servo1-switched">120</span>°</p>
+        <button onclick="adjustServo(0, 0, 1)">Straight +1°</button>
+        <button onclick="adjustServo(0, 0, -1)">Straight -1°</button>
+        <button onclick="adjustServo(0, 1, 1)">Switched +1°</button>
+        <button onclick="adjustServo(0, 1, -1)">Switched -1°</button>
+    </div>
+    <hr>
+    <div id="servo4" class="servo-control">
+        <h2>Servo 4</h2>
+        <p>Straight Position: <span id="servo1-straight">70</span>°</p>
+        <p>Switched Position: <span id="servo1-switched">120</span>°</p>
+        <button onclick="adjustServo(0, 0, 1)">Straight +1°</button>
+        <button onclick="adjustServo(0, 0, -1)">Straight -1°</button>
+        <button onclick="adjustServo(0, 1, 1)">Switched +1°</button>
+        <button onclick="adjustServo(0, 1, -1)">Switched -1°</button>
+    </div>
+
+    <!-- Repeat the above div block for each servo (servo2, servo3, servo4) with appropriate ids -->
+
+    <button onclick="saveSettings()">Save Settings</button>
+
+    <script>
+        function sendRequest(url, callback) {
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    callback(xhr.responseText);
+                }
+            };
+            xhr.open("GET", url, true);
+            xhr.send();
+        }
+
+        function adjustServo(servo, positionType, change) {
+            var straightSpan = document.getElementById('servo' + (servo + 1) + '-straight');
+            var switchedSpan = document.getElementById('servo' + (servo + 1) + '-switched');
+            var currentPos = positionType === 0 ? parseInt(straightSpan.innerText) : parseInt(switchedSpan.innerText);
+            var newPos = currentPos + change;
+
+            sendRequest('/sendCommand?servo=' + servo + '&positionType=' + positionType + '&position=' + newPos, function(data) {
+                if (positionType === 0) {
+                    straightSpan.innerText = newPos;
+                } else {
+                    switchedSpan.innerText = newPos;
+                }
+                alert(data);
+            });
+        }
+
+        function saveSettings() {
+            sendRequest('/saveSettings', function(data) {
+                alert(data);
+            });
+        }
+    </script>
+</body>
+</html>
