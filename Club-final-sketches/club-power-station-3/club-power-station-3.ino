@@ -1,6 +1,4 @@
  
- 
- 
   #include <Adafruit_NeoPixel.h>
   #include <Wire.h>  
   #include <SPI.h>
