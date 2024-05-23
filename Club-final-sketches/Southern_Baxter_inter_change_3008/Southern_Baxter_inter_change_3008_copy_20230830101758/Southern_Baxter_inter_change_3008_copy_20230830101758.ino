@@ -1,4 +1,6 @@
-
+/**
+* authour:WDMRC
+*/
  
  
   #include <Adafruit_NeoPixel.h>
