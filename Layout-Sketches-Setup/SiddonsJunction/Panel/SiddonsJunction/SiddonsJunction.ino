@@ -16,17 +16,13 @@
   int numPixels   =  6; //Number of pixels. 
   int pixelFormat = NEO_GRB + NEO_KHZ800;// NeoPixel color format & data rate.
   int buttonNumber = 9;
-  
- 
-
-  
+    
   #define r ledBril,  0,  0 // red.
   #define g 0, ledBril,  0 //green.
   #define b  0,  0, ledBril //blue.
   #define y ledBril, ledBril,  0 //yellow.
   #define d  0,  0,  0 //off.
- 
-  
+   
   int pointNumber = 0;
 
   bool buttonSetting[8] = {0,0,0,0,0,0,0,0};
